@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hospital Queue System</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>vitaminQ | Hospital Queue System</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -32,18 +35,35 @@
           <div class="form-row">
             <div class="input-group">
               <label>Full Name</label>
-              <input type="text" id="name" required />
+              <input
+                type="text"
+                id="name"
+                required
+                placeholder="e.g., Sarah Johnson"
+              />
             </div>
             <div class="input-group">
               <label>Phone</label>
-              <input type="tel" id="phone" required />
+              <input
+                type="tel"
+                id="phone"
+                required
+                placeholder="+254 7XX XXX XXX"
+              />
             </div>
           </div>
           <div class="input-group">
             <label>Chief Complaint</label>
-            <textarea id="complaint" rows="2" required></textarea>
+            <textarea
+              id="complaint"
+              rows="2"
+              required
+              placeholder="Describe main symptoms / reason for visit"
+            ></textarea>
           </div>
-          <button type="submit" class="btn-primary">Add to Queue</button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-plus-circle"></i> Add to Queue
+          </button>
         </form>
       </div>
 
@@ -51,11 +71,19 @@
         <div class="queue-stats">
           <i class="fas fa-users"></i> <span id="queueCount">0</span> waiting
         </div>
-        <button id="callNextBtn" class="btn-primary btn-call">Call Next</button>
+        <button id="callNextBtn" class="btn-primary btn-call">
+          <i class="fas fa-bell"></i> Call Next
+        </button>
       </div>
 
-      <div id="queueContainer" class="queue-grid"></div>
+      <div id="queueContainer" class="queue-grid">
+        <div class="empty-state">
+          <i class="fas fa-queue"></i>
+          <p>Loading queue ...</p>
+        </div>
+      </div>
     </div>
+
     <script src="app.js"></script>
   </body>
 </html>
