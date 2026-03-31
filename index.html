@@ -1,55 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hospital Queue System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="queue-vibe">
-        <div class="brand-bar">
-            <div class="title-section">
-                <h1><i class="fas fa-hospital-user"></i> vitaminQ</h1>
-                <p>smart flow · care first</p>
-            </div>
-            <div class="badge-pulse">
-                <i class="fas fa-sync-alt fa-fw"></i> auto-refresh active
-            </div>
+      <div class="brand-bar">
+        <div class="title-section">
+          <h1><i class="fas fa-hospital-user"></i> vitaminQ</h1>
+          <p>smart flow · care first</p>
         </div>
-
-        <div class="glass-card">
-            <h2>New Patient</h2>
-            <form id="patientForm">
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Full Name</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Phone</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Chief Complaint</label>
-                    <textarea id="complaint" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn-primary">Add to Queue</button>
-            </form>
+        <div class="badge-pulse">
+          <i class="fas fa-sync-alt fa-fw"></i> auto-refresh active
         </div>
+      </div>
 
-        <div class="action-bar">
-            <div class="queue-stats">
-                <i class="fas fa-users"></i> <span id="queueCount">0</span> waiting
+      <div class="glass-card">
+        <h2>New Patient</h2>
+        <form id="patientForm">
+          <div class="form-row">
+            <div class="input-group">
+              <label>Full Name</label>
+              <input type="text" id="name" required />
             </div>
-            <button id="callNextBtn" class="btn-primary btn-call">Call Next</button>
-        </div>
+            <div class="input-group">
+              <label>Phone</label>
+              <input type="tel" id="phone" required />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Chief Complaint</label>
+            <textarea id="complaint" rows="2" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Add to Queue</button>
+        </form>
+      </div>
 
-        <div id="queueContainer" class="queue-grid"></div>
+      <div class="action-bar">
+        <div class="queue-stats">
+          <i class="fas fa-users"></i> <span id="queueCount">0</span> waiting
+        </div>
+        <button id="callNextBtn" class="btn-primary btn-call">Call Next</button>
+      </div>
+
+      <div id="queueContainer" class="queue-grid"></div>
     </div>
-    <script src="js/app.js"></script>
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
