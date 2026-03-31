@@ -1,9 +1,6 @@
-// app.js - fully fixed, error resilient, smooth queue management
 const API_BASE = "https://hospital-queueing-system.onrender.com";
 
-// Helper: show temporary toast-like feedback (optional but improves UX)
 function showToast(message, isError = false) {
-	// quick inline alert replacement (doesn't block UI)
 	const toastDiv = document.createElement("div");
 	toastDiv.innerText = message;
 	toastDiv.style.position = "fixed";
@@ -23,7 +20,16 @@ function showToast(message, isError = false) {
 	setTimeout(() => toastDiv.remove(), 2500);
 }
 
-// Load and render queue from backend
+function escapeHtml(str) {
+	if (!str) return "";
+	return str.replace(/[&<>]/g, function (m) {
+		if (m === "&") return "&amp;";
+		if (m === "<") return "&lt;";
+		if (m === ">") return "&gt;";
+		return m;
+	});
+}
+
 async function loadQueue() {
 	try {
 		const res = await fetch(`${API_BASE}/queue`);
@@ -44,7 +50,6 @@ async function loadQueue() {
 		for (const p of patients) {
 			const card = document.createElement("div");
 			card.className = "patient-card";
-			// safely escape complaint and name to avoid injection (basic)
 			const safeName = escapeHtml(p.name);
 			const safePhone = escapeHtml(p.phone);
 			const safeComplaint = escapeHtml(p.complaint);
@@ -57,7 +62,7 @@ async function loadQueue() {
 				: "just now";
 
 			card.innerHTML = `
-        <div class="card-token">#${escapeHtml(token)}</div>
+        <div class="card-token">#${escapeHtml(String(token))}</div>
         <div class="patient-name"><i class="fas fa-user-circle"></i> ${safeName}</div>
         <div class="detail-row"><i class="fas fa-mobile-alt"></i> ${safePhone}</div>
         <div class="complaint-text">📝 ${safeComplaint}</div>
@@ -66,7 +71,6 @@ async function loadQueue() {
           <button class="serve-btn-card" data-id="${p.id}">√ Served</button>
         </div>
       `;
-			// attach event listener dynamically (cleaner than onclick string)
 			const serveBtn = card.querySelector(".serve-btn-card");
 			serveBtn.addEventListener("click", (e) => {
 				e.stopPropagation();
@@ -84,21 +88,6 @@ async function loadQueue() {
 	}
 }
 
-// simple escape to avoid XSS
-function escapeHtml(str) {
-	if (!str) return "";
-	return str
-		.replace(/[&<>]/g, function (m) {
-			if (m === "&") return "&amp;";
-			if (m === "<") return "&lt;";
-			if (m === ">") return "&gt;";
-			return m;
-		})
-		.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (c) {
-			return c;
-		});
-}
-
 async function markServed(id) {
 	try {
 		const response = await fetch(`${API_BASE}/patients/${id}`, {
@@ -106,14 +95,13 @@ async function markServed(id) {
 		});
 		if (!response.ok) throw new Error("Failed to mark as served");
 		showToast(`Patient #${id} marked as served ✅`);
-		await loadQueue(); // refresh immediately
+		await loadQueue();
 	} catch (err) {
 		console.error("Serve error:", err);
 		showToast("Could not mark patient as served. Try again.", true);
 	}
 }
 
-// Add new patient
 document
 	.getElementById("patientForm")
 	?.addEventListener("submit", async (e) => {
@@ -146,7 +134,6 @@ document
 		}
 	});
 
-// Call next patient
 document.getElementById("callNextBtn")?.addEventListener("click", async () => {
 	try {
 		const res = await fetch(`${API_BASE}/next`, { method: "POST" });
@@ -174,10 +161,8 @@ document.getElementById("callNextBtn")?.addEventListener("click", async () => {
 	}
 });
 
-// Auto-refresh every 6 seconds (more reliable)
 setInterval(() => {
 	loadQueue().catch((e) => console.warn("auto-refresh failed", e));
 }, 6000);
 
-// initial load
 loadQueue().catch(console.warn);
