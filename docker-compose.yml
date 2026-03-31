@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - hospital_db:/app/data
+    environment:
+      - DATABASE_URL=sqlite:///./data/hospital_queue.db
+
+volumes:
+  hospital_db:
