@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE = "https://hospital-queueing-system.onrender.com";
 async function loadQueue() {
   try {
     const res = await fetch(`${API_BASE}/queue`);
