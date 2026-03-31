@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>hospital queue system</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f5f7fe 0%, #eef2fa 100%);
+      font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+
+    .queue-vibe {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+
+    .brand-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .title-section h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e2b6e, #4f46e5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-section h1 i {
+      background: none;
+      background-clip: unset;
+      -webkit-background-clip: unset;
+      color: #4f46e5;
+      font-size: 2rem;
+    }
+
+    .badge-pulse {
+      background: #eff6ff;
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e40af;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pulse i {
+      font-size: 0.8rem;
+      color: #4f46e5;
+    }
+
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 32px;
+      box-shadow:
+        0 20px 35px -12px rgba(0, 0, 0, 0.08),
+        0 1px 2px rgba(0, 0, 0, 0.02);
+      padding: 1.8rem;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(79, 70, 229, 0.12);
+    }
+
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .input-group {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .input-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5b6e8c;
+    }
+
+    input,
+    textarea {
+      background: #f9fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      font-family: "Inter", monospace;
+      transition: 0.2s;
+      outline: none;
+      color: #0f172a;
+      font-weight: 500;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+
+    .btn-primary {
+      background: linear-gradient(105deg, #4f46e5 0%, #7c3aed 100%);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(79, 70, 229, 0.35);
+      background: linear-gradient(105deg, #6366f1 0%, #8b5cf6 100%);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffffcc;
+      backdrop-filter: blur(2px);
+    }
+
+    .btn-secondary:hover {
+      border-color: #4f46e5;
+      background: white;
+      color: #4f46e5;
+      transform: translateY(-1px);
+    }
+
+    .btn-call {
+      background: linear-gradient(115deg, #10b981, #059669);
+      box-shadow: 0 6px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-call:hover {
+      background: linear-gradient(115deg, #34d399, #10b981);
+    }
+
+    .serve-btn-card {
+      background: #f43f5e;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .serve-btn-card:hover {
+      background: #e11d48;
+      transform: scale(0.98);
+      box-shadow: 0 2px 8px rgba(244, 63, 94, 0.4);
+    }
+
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.5rem 0 1.2rem 0;
+      gap: 1rem;
+    }
+
+    .queue-stats {
+      background: #f1f4fe;
+      padding: 0.4rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #2d3a6e;
+    }
+
+    .queue-stats i {
+      margin-right: 6px;
+      color: #4f46e5;
+    }
+
+
+    .queue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .patient-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.2rem 1.4rem;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(79, 70, 229, 0.1);
+      box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .patient-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 36px -16px rgba(79, 70, 229, 0.2);
+      border-color: rgba(79, 70, 229, 0.3);
+    }
+
+    .card-token {
+      display: inline-block;
+      background: linear-gradient(125deg, #4f46e5, #818cf8);
+      padding: 0.2rem 0.9rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+    }
+
+    .patient-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .patient-name i {
+      color: #4f46e5;
+      font-size: 1.2rem;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #334155;
+      margin: 0.6rem 0;
+      background: #f8fafc;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    .detail-row i {
+      width: 22px;
+      color: #64748b;
+    }
+
+    .complaint-text {
+      background: #fef9e3;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #92400e;
+      margin: 0.5rem 0;
+      border-left: 3px solid #f59e0b;
+    }
+
+    .time-arrival {
+      font-size: 0.7rem;
+      color: #6c86a3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      border-top: 1px dashed #e9eef3;
+      padding-top: 0.8rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 48px;
+      color: #5b6e8c;
+      font-weight: 500;
+      border: 1px dashed #cbd5e1;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    .error-message {
+      background: #ffe9e9;
+      color: #b91c1c;
+      border-radius: 60px;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin: 1rem 0 0;
+      display: inline-block;
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #7e8aa8;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 1rem;
+      }
+
+      .glass-card {
+        padding: 1.2rem;
+      }
+
+      .patient-card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="queue-vibe">
+
+    <div class="brand-bar">
+      <div class="title-section">
+        <h1>
+          <i class="fas fa-hospital-user"></i>
+          vitami<span style="
+                background: linear-gradient(125deg, #4f46e5, #c2410c);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+              ">n</span>Q
+        </h1>
+        <p style="font-size: 0.85rem; color: #4a5b7a; margin-top: 4px">
+          smart flow · care first
+        </p>
+      </div>
+      <div class="badge-pulse">
+        <i class="fas fa-sync-alt fa-fw"></i> auto‑refresh active
+      </div>
+    </div>
+
+
+    <div class="glass-card" style="margin-bottom: 1.8rem">
+      <div style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+          ">
+        <i class="fas fa-plus-circle" style="color: #4f46e5; font-size: 1.6rem"></i>
+        <h2 style="font-weight: 600; font-size: 1.4rem; color: #0f172a">
+          New patient
+        </h2>
+      </div>
+      <form id="patientForm">
+        <div class="form-row">
+          <div class="input-group">
+            <label><i class="far fa-user"></i> Full name</label>
+            <input type="text" id="name" placeholder="e.g., Eldson Opio" required />
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-phone-alt"></i> Phone</label>
+            <input type="tel" id="phone" placeholder="0723456789" required />
+          </div>
+        </div>
+        <div class="input-group" style="margin: 1rem 0 0.5rem 0">
+          <label><i class="fas fa-notes-medical"></i> Chief complaint</label>
+          <textarea id="complaint" placeholder="Describe symptoms / reason for visit" rows="2" required></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 1rem">
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-arrow-right-to-bracket"></i> Add to queue
+          </button>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="action-bar">
+      <div class="queue-stats" id="queueStatsBadge">
+        <i class="fas fa-users"></i> <span id="queueCount">0</span> waiting
+      </div>
+      <div style="display: flex; gap: 12px">
+        <button id="refreshBtn" class="btn-secondary">
+          <i class="fas fa-arrows-rotate"></i> Refresh
+        </button>
+        <button id="callNextBtn" class="btn-primary btn-call">
+          <i class="fas fa-bell"></i> Call next
+        </button>
+      </div>
+    </div>
+
+
+    <div id="error" class="error-message" style="display: none"></div>
+
+
+    <div id="queueContainer" class="queue-grid">
+      < </div>
+        <footer>
+          <i class="fas fa-shield-alt"></i> real-time sync • token based priority
+        </footer>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:8000";
+      const errorDiv = document.getElementById("error");
+      const queueContainer = document.getElementById("queueContainer");
+      const queueCountSpan = document.getElementById("queueCount");
+
+      function showError(message, isError = true) {
+        if (!message) {
+          errorDiv.style.display = "none";
+          errorDiv.textContent = "";
+          return;
+        }
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+        if (!isError) {
+
+        }
+        setTimeout(() => {
+          if (errorDiv.textContent === message) {
+            errorDiv.style.display = "none";
+          }
+        }, 4000);
+      }
+
+
+      async function markServed(patientId) {
+        if (
+          !confirm(
+            "✅ Mark this patient as served? They'll be removed from queue.",
+          )
+        )
+          return;
+        try {
+          const res = await fetch(`${API_BASE}/patients/${patientId}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status} — could not remove`);
+          loadQueue();
+          showError("Patient marked as served ✓", false);
+        } catch (err) {
+          alert("Error removing patient: " + err.message);
+          showError("Failed to serve patient: " + err.message);
+        }
+      }
+
+
+      async function loadQueue() {
+        try {
+          const res = await fetch(`${API_BASE}/queue`);
+          if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+          const patients = await res.json();
+
+
+          queueCountSpan.innerText = patients.length;
+
+          if (!patients.length) {
+            queueContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-hourglass-half"></i>
+            <p style="margin-top: 12px;">Queue is peaceful ✨<br>Add a new patient or wait for arrivals</p>
+          </div>
+        `;
+            showError("");
+            return;
+          }
+
+
+          queueContainer.innerHTML = "";
+          patients.forEach((patient) => {
+            const card = document.createElement("div");
+            card.className = "patient-card";
+
+
+            let arrivalDisplay = "just now";
+            try {
+              const dateObj = new Date(patient.created_at);
+              if (!isNaN(dateObj.getTime())) {
+                arrivalDisplay = dateObj.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+              } else {
+                arrivalDisplay = "recent";
+              }
+            } catch (e) {
+              arrivalDisplay = "arrived";
+            }
+
+
+            const tokenLabel = patient.token ? `#${patient.token}` : "TK—";
+
+            card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div class="card-token">${tokenLabel}</div>
+          </div>
+          <div class="patient-name">
+            <i class="fas fa-user-circle"></i> ${escapeHtml(patient.name)}
+          </div>
+          <div class="detail-row">
+            <i class="fas fa-mobile-alt"></i> <span>${escapeHtml(patient.phone)}</span>
+          </div>
+          <div class="complaint-text">
+            <i class="fas fa-stethoscope" style="margin-right: 6px;"></i> ${escapeHtml(patient.complaint)}
+          </div>
+          <div class="time-arrival">
+            <span><i class="far fa-clock"></i> Arrival · ${arrivalDisplay}</span>
+            <button class="serve-btn-card" data-id="${patient.id}"><i class="fas fa-check-circle"></i> Served</button>
+          </div>
+        `;
+
+            queueContainer.appendChild(card);
+
+
+            const serveBtn = card.querySelector(".serve-btn-card");
+            if (serveBtn) {
+              const id = patient.id;
+              serveBtn.onclick = (e) => {
+                e.preventDefault();
+                markServed(id);
+              };
+            }
+          });
+          showError("");
+        } catch (err) {
+          console.error(err);
+          queueContainer.innerHTML = `<div class="empty-state"><i class="fas fa-plug"></i> <p>⚠️ Cannot reach server. Make sure backend runs at ${API_BASE}</p></div>`;
+          showError("Failed to load queue: " + err.message);
+        }
+      }
+
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str
+          .replace(/[&<>]/g, function (m) {
+            if (m === "&") return "&amp;";
+            if (m === "<") return "&lt;";
+            if (m === ">") return "&gt;";
+            return m;
+          })
+          .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (c) {
+            return c;
+          });
+      }
+
+
+      const patientForm = document.getElementById("patientForm");
+      patientForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const complaint = document.getElementById("complaint").value.trim();
+
+        if (!name || !phone || !complaint) {
+          alert("Please fill all fields (name, phone, complaint)");
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/patients`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, phone, complaint }),
+          });
+          if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`HTTP ${res.status}: ${errText}`);
+          }
+
+          const successMsg = document.createElement("div");
+          patientForm.reset();
+          loadQueue();
+
+          const submitBtn = patientForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-check"></i> Added!';
+          setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+          }, 1200);
+        } catch (err) {
+          alert("Error adding patient: " + err.message);
+          showError("Could not add patient: " + err.message);
+        }
+      });
+
+
+      document
+        .getElementById("callNextBtn")
+        .addEventListener("click", async () => {
+          try {
+            const res = await fetch(`${API_BASE}/next`, { method: "POST" });
+            if (res.status === 404) {
+              alert("✨ Queue is empty — no patients to call.");
+              return;
+            }
+            if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+            const patient = await res.json();
+
+            alert(
+              `🔔 Next patient: ${patient.name} (Token ${patient.token}) · Please proceed to consultation room.`,
+            );
+            loadQueue();
+          } catch (err) {
+            if (err.message.includes("404")) {
+              alert("Queue is empty, add patients first.");
+            } else {
+              alert("Error calling next: " + err.message);
+            }
+          }
+        });
+
+
+      document.getElementById("refreshBtn").addEventListener("click", () => {
+        loadQueue();
+        showError("Queue refreshed", false);
+      });
+
+
+      setInterval(() => {
+        loadQueue();
+      }, 5000);
+
+
+      loadQueue();
+    </script>
+</body>
+
+</html>
